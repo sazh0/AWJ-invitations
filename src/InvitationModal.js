@@ -20,7 +20,15 @@ const translations = {
     shareNews: "Share this news",
     backToHomepage: "Back to Homepage",
     calendarAdded: "Calendar event added for AWJ Project Poster Day: May 4, 2025",
-    shareMessage: "Join me at the AWJ Project Poster Day on Sunday, May 4, 2025 at FCIT female building from 10:00 AM - 2:00 PM",
+    shareMessage: `🎉 You're invited to experience the full journey of AWJ!
+
+    🚀 Where generative AI meets entrepreneurial passion — together, we’re shaping a new path for ambitious ventures.
+    
+    📅 Date: Sunday, May 4, 2025  
+    🕙 Time: 10:00 AM – 2:00 PM  
+    📍 Location: Faculty of Computing and Information Technology – Female Campus
+    
+    ✨ We’re waiting for you!`,
     thankYouShare: "Thank you for sharing!",
     countdown: {
       days: "Days",
@@ -37,14 +45,23 @@ const translations = {
     timeLabel: "الوقت:",
     timeValue: "١٠:٠٠ صباحاً - ٢:٠٠ مساءً",
     locationLabel: "المكان:",
-    locationValue: "مبنى كلية الحاسبات والمعلومات للبنات",
+    locationValue: "مبنى كلية الحاسبات وتقنية المعلومات بشطر الطالبات",
     highlightsLabel: "أهم اللحظات:",
     highlightsValue: "قصتنا، تجربة تفاعلية مباشرة، أسئلة وأجوبة مع مطورين أَوج",
     addToCalendar: "إضافة إلى التقويم",
     shareNews: "مشاركة الخبر",
     backToHomepage: "العودة إلى الصفحة الرئيسية",
     calendarAdded: "تمت إضافة حدث التقويم ليوم عرض مشروع أوج: ٤ مايو ٢٠٢٥",
-    shareMessage: "انضم إلي في يوم عرض مشروع أوج يوم الأحد ٤ مايو ٢٠٢٥ في مبنى كلية الحاسبات والمعلومات للبنات من الساعة ١٠:٠٠ صباحاً إلى ٢:٠٠ مساءً",
+    shareMessage: `🎉 أنت مدعو لتجربة أَوج المتكاملة!
+
+    🚀 حيث يمتزج الذكاء الاصطناعي التوليدي بشغف الريادة، لنصنع معًا مسارًا جديدًا للمشاريع الطموحة.
+    
+    📅 الموعد: الأحد ٤ مايو ٢٠٢٥  
+    🕙 الوقت: من ١٠:٠٠ صباحًا حتى ٢:٠٠ مساءً
+    📍 الموقع: مبنى كلية الحاسبات وتقنية المعلومات بشطر الطالبات  
+
+    ✨ بانتظارك!`
+    ,
     thankYouShare: "شكراً للمشاركة!",
     countdown: {
       days: "أيام",
@@ -195,7 +212,15 @@ const InvitationModal = ({ isOpen, onClose }) => {
 
   const handleAddToCalendar = (e) => {
     e.preventDefault();
-    alert(t.calendarAdded);
+    const title = encodeURIComponent("AWJ Poster Day");
+    const details = encodeURIComponent("Join us for AWJ final poster day!");
+    const location = encodeURIComponent("Faculty of Computing and Information Technology – Female Campus");
+    const startDateTime = "20250504T070000Z"; // 10:00 AM Saudi time (UTC+3)
+    const endDateTime = "20250504T110000Z";   // 2:00 PM Saudi time (UTC+3)
+
+    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${startDateTime}/${endDateTime}`;
+
+    window.open(url, "_blank");
   };
 
   // Handle sharing functionality with celebration
@@ -236,7 +261,6 @@ const InvitationModal = ({ isOpen, onClose }) => {
 
     // Clean up and notify the user
     document.body.removeChild(textarea);
-    alert('Message copied to clipboard! You can paste it in your messaging app.');
   };
 
   // If modal is not open, don't render anything
@@ -254,16 +278,6 @@ const InvitationModal = ({ isOpen, onClose }) => {
     >
       <div className="invitation-content">
         <div className="invitation-ribbon"></div>
-
-        {/* Celebration overlay */}
-        {isCelebrating && (
-          <div className="celebration-container">
-            {createConfettiElements()}
-            <div className="thank-you-message">
-              <span>🎉 {t.thankYouShare} 🎉</span>
-            </div>
-          </div>
-        )}
 
         <div className="invitation-body">
           <h2 className="invitation-title animate-in">{t.title}</h2>
@@ -308,6 +322,16 @@ const InvitationModal = ({ isOpen, onClose }) => {
               <span><strong>{t.highlightsLabel}</strong> {t.highlightsValue}</span>
             </div>
           </div>
+
+          {/* Celebration overlay */}
+          {isCelebrating && (
+            <div className="celebration-container">
+              {createConfettiElements()}
+              <div className="thank-you-message">
+                <span>{t.thankYouShare} 🎉</span>
+              </div>
+            </div>
+          )}
 
           <div className="invitation-buttons animate-in">
 
